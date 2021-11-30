@@ -66,7 +66,11 @@ namespace QAPlatform.Controller
             {
                 byte[] calculatedPassword = new Rfc2898DeriveBytes(value.Password, MyUser.PassKey, 10000).GetBytes(20);
                 if (calculatedPassword.SequenceEqual(MyUser.Password))
+                {
+                    MyUser.Token = Guid.NewGuid().ToString();
+                    IUserRepository.Update(MyUser);
                     return Ok(MyUser);
+                }
             }
 
             return Unauthorized();

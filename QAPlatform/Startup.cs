@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using QAPlatform.Contexts;
+using QAPlatform.Controller;
 using QAPlatform.Repositories.AnswerRepository;
 using QAPlatform.Repositories.QuestionRepository;
 using QAPlatform.Repositories.UserRepository;
@@ -43,6 +44,8 @@ namespace QAPlatform
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IQuestionRepository, QuestionRepository>();
             services.AddTransient<IAnswerRepository, AnswerRepository>();
+            services.AddScoped<ApiTokenFilter>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
