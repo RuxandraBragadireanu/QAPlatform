@@ -4,6 +4,7 @@ using QAPlatform.Models;
 using QAPlatform.Repositories.QuestionRepository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace QAPlatform.Controller
 {
@@ -46,11 +47,12 @@ namespace QAPlatform.Controller
             IQuestionRepository.Create(model);
         }
         //PUT api/values
-        [HttpPut("update")]
+        [HttpPut("update/{id}")]
         [ServiceFilter(typeof(ApiTokenFilter))]
-        public Question Put(Guid id, QuestionDTO value)
+        public ActionResult<Question> Put(Guid id, QuestionDTO value)
         {
             Question model = IQuestionRepository.Get(id);
+
             if (value.Title != null)
             {
                 model.Title= value.Title;
@@ -64,7 +66,7 @@ namespace QAPlatform.Controller
                 model.Category = value.category;
             }
 
-            return IQuestionRepository.Update(model);
+            return Ok(IQuestionRepository.Update(model));
         }
         // DELETE api/values/5
         [HttpDelete("{id}")]

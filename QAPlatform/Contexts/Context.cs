@@ -21,6 +21,9 @@ namespace QAPlatform.Contexts
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

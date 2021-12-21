@@ -9,6 +9,7 @@ namespace QAPlatform.Models
 {
     public class Question
     {
+        [Key]
         public Guid Id { get; set; }
         [Required]
         public string Title { get; set; }
