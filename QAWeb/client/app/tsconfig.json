@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/client",
+    "target": "es6",
+    "lib": ["es2016", "dom"]
+  },
+  "include": [
+    "./**/*.ts",
+    "./**/*.tsx",
+    "../../node_modules/@types"
+  ]
+}
