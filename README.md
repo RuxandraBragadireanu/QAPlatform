@@ -12,3 +12,25 @@ Database:
 Visual Studio -> View -> Other window ->  Package Manager Console
 
 Update-Database
+
+-------
+
+Frontend prerequisites:
+
+-  node 8.9.4
+
+How to start the frontend project:
+
+**Terminal 1:**
+
+1. `cd QAWeb`
+2. `npm i`
+3. `npm run build-server`
+4. `npm run start-server`
+
+**Terminal 2:**
+
+1. `cd QAWeb`
+2. `npm run start-client`
+
+The app should work now.
