@@ -38,7 +38,17 @@ namespace QAPlatform.Repositories.QuestionRepository
 
         public Question Get(Guid id)
         {
-            return Context.Questions.SingleOrDefault(x => x.Id == id);
+            Question question = Context.Questions.SingleOrDefault(x => x.Id == id);
+            if(question != null)
+            {
+                User user = Context.Users.FirstOrDefault(obj => obj.Id == question.UserId);
+                question.User = user;
+
+                List<Answer> answers = Context.Answers.Where(obj => obj.QuestionId == id).Include(obj => obj.User).ToList();
+                question.Answers = answers;
+            }
+
+            return question;
         }
 
         public List<Question> GetAll()
