@@ -27,7 +27,7 @@ namespace QAPlatform.Controller
         }
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<User> Get(Guid id)
+        public IActionResult Get(Guid id)
         {
             return Ok(IQuestionRepository.Get(id));
         }
