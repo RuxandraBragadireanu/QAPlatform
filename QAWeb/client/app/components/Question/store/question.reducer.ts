@@ -21,7 +21,7 @@ export function questionReducer(state = initialState, action) {
     }
     case QuestionActions.DELETE_COMMENT: {
       let newState : QuestionState = deepCopy(state);
-      newState.topic.comments = newState.topic.comments.filter(comment => comment.id !== action.payload.commentId);
+      newState.topic.answers = newState.topic.answers.filter(comment => comment.id !== action.payload.commentId);
       return {...state, ...newState}
     }
     default:

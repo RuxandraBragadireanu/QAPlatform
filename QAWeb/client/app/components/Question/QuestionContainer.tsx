@@ -53,7 +53,7 @@ export class QuestionContainer extends React.Component<TopicProps, TopicState> {
   render() {
     const { topic } = this.props;
 
-    const comments = topic.comments && topic.comments.map(comment => (
+    const comments = topic.answers && topic.answers.map(comment => (
       <Paper key={comment.id} style={{width: 'calc(54% + 10px)', margin: 24, marginLeft: '23%', overflowX: 'auto'}}>
         <div style={{padding: 24, wordBreak: 'break-word'}}>
           <b>{comment.user.username}</b>

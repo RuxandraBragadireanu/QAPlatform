@@ -4,7 +4,7 @@ export interface Topic {
   userId: string,
   userName: string,
   content: string,
-  comments: Comment[]
+  answers: Comment[]
 }
 
 export interface Comment {

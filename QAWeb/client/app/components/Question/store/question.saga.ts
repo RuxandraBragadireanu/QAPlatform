@@ -38,5 +38,9 @@ export function* addComment(action: any) {
 }
 
 export function* deleteComment(action: any) {
-  yield call(axios.delete, `/api/generic/answer/${action.payload.commentId}`);
+  const userData = getUserData();
+  yield call(axios.delete, `/api/generic/answer/${action.payload.commentId}`, {
+    headers: {
+      'Authorization': userData.token
+    }});
 }
