@@ -23,12 +23,13 @@ export class QuestionActions {
     }
   }
 
-  static addCommentStart(topicId: number, comment: string) {
+  static addCommentStart(topicId: number, comment: string, score: number) {
     return {
       type: QuestionActions.ADD_COMMENT_START,
       payload: {
         topicId,
-        comment
+        comment,
+        score
       }
     }
   }

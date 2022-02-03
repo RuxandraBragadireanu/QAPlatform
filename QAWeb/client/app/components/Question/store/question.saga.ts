@@ -26,7 +26,7 @@ export function* addComment(action: any) {
     axios.post, '/api/generic/answer/add?userId=' + userData.id, {
       content: action.payload.comment,
       questionId: action.payload.topicId,
-      score: 0
+      score: action.payload.score
     }, {
       headers: {
         'Authorization': userData.token

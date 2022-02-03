@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {QuestionActions} from "./store/question.actions";
 import { ApplicationState } from '../../store/application-state';
 import { MatchProps, Topic } from '../../shared/interfaces';
-import { Button, CircularProgress, Paper, TableCell } from '@material-ui/core';
+import { Button, CircularProgress, Paper, TableCell, FormControl, InputLabel, Select, MenuItem, OutlinedInput } from '@material-ui/core';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
@@ -17,7 +17,8 @@ interface TopicProps {
 }
 
 interface TopicState {
-  comment: string
+  comment: string;
+  score: number;
 }
 
 export class QuestionContainer extends React.Component<TopicProps, TopicState> {
@@ -26,7 +27,8 @@ export class QuestionContainer extends React.Component<TopicProps, TopicState> {
     super(props);
 
     this.state = {
-      comment: ''
+      comment: '',
+      score: 1
     }
   }
 
@@ -35,11 +37,21 @@ export class QuestionContainer extends React.Component<TopicProps, TopicState> {
   }
 
   addComment = () => {
-    this.props.addComment(this.props.topic.id, this.state.comment);
+    this.props.addComment(this.props.topic.id, this.state.comment, this.state.score);
+  };
+
+  handleScoreChange = (event) => {
+    this.setState({
+      ...this.state,
+      score: parseInt(event.target.value)
+    })
   };
 
   changeComment = (event) => {
-    this.setState({comment: event.target.value})
+    this.setState({
+      ...this.state,
+      comment: event.target.value
+    })
   };
 
   deleteComment = (commentId) => {
@@ -47,7 +59,10 @@ export class QuestionContainer extends React.Component<TopicProps, TopicState> {
   };
 
   componentWillReceiveProps() {
-    this.setState({comment: ''});
+    this.setState({
+      score: 1,
+      comment: ''
+    });
   }
 
   render() {
@@ -56,7 +71,7 @@ export class QuestionContainer extends React.Component<TopicProps, TopicState> {
     const comments = topic.answers && topic.answers.map(comment => (
       <Paper key={comment.id} style={{width: 'calc(54% + 10px)', margin: 24, marginLeft: '23%', overflowX: 'auto'}}>
         <div style={{padding: 24, wordBreak: 'break-word'}}>
-          <b>{comment.user.username}</b>
+          <b>{comment.user.username}</b> (Score: <b>{comment.score}/10</b>)
             <div style={{display: 'flex'}}>
               <div style={{marginTop: 8}}>
                 {comment.content}
@@ -103,7 +118,27 @@ export class QuestionContainer extends React.Component<TopicProps, TopicState> {
             multiline
           />
 
-          <div>
+          <div style={{display: 'flex', flexDirection: 'column', width: 120}}>
+            <FormControl style={{minWidth: 120, margin: '12px 0'}}>
+              <InputLabel htmlFor="age-simple">Score</InputLabel>
+              <Select
+                value={this.state.score}
+                onChange={this.handleScoreChange}
+                inputProps={{
+                  name: 'age',
+                  id: 'age-simple',
+                }}
+              >
+                {
+                  Array.from(Array(10).keys())
+                    .map(idx => {
+                      return (
+                        <MenuItem value={idx + 1} key={idx}>{idx + 1}</MenuItem>
+                      );
+                    })
+                }
+              </Select>
+            </FormControl>
             <Button type="submit" variant='contained'>
               Submit
             </Button>
@@ -135,8 +170,8 @@ const mapDispatchToProps = dispatch => {
     onLoad: (id) => {
       dispatch(QuestionActions.loadTopicStart(id));
     },
-    addComment: (topicId, comment) => {
-      dispatch(QuestionActions.addCommentStart(topicId, comment));
+    addComment: (topicId, comment, score) => {
+      dispatch(QuestionActions.addCommentStart(topicId, comment, score));
     },
     deleteComment: (commentId) => {
       dispatch(QuestionActions.deleteComment(commentId));

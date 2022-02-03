@@ -16,8 +16,8 @@ function* getProfileInfo() {
       ...getUserData(),
       isAuthenticated: true,
       userName: userData.username,
-      firstName: userData.userName,
-      lastName: userData.userName,
+      firstName: userData.username,
+      lastName: userData.username,
       userId: userData.id
     }
   
