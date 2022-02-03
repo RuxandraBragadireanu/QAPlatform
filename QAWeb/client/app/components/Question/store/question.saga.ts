@@ -8,6 +8,7 @@ export function* questionSaga() {
   yield all([
     takeEvery(QuestionActions.TOPIC_LOAD_START, getTopic),
     takeEvery(QuestionActions.ADD_COMMENT_START, addComment),
+    takeEvery(QuestionActions.EDIT_COMMENT_START, editComment),
     takeEvery(QuestionActions.DELETE_COMMENT, deleteComment)
   ]);
 }
@@ -26,7 +27,7 @@ export function* addComment(action: any) {
     axios.post, '/api/generic/answer/add?userId=' + userData.id, {
       content: action.payload.comment,
       questionId: action.payload.topicId,
-      score: action.payload.score
+      score: 0
     }, {
       headers: {
         'Authorization': userData.token
@@ -34,6 +35,18 @@ export function* addComment(action: any) {
   });
 
   yield delay(1000);
+  yield put({ type: QuestionActions.TOPIC_LOAD_START, payload: { id: action.payload.topicId } });
+}
+
+export function* editComment(action: any) {
+  const userData = getUserData();
+  yield call(
+    axios.put, `/api/generic/answer/update/${action.payload.answerId}?userId=` + userData.id, 
+    {score: action.payload.score}, {
+      headers: {
+        'Authorization': userData.token
+      }
+  });   
   yield put({ type: QuestionActions.TOPIC_LOAD_START, payload: { id: action.payload.topicId } });
 }
 
