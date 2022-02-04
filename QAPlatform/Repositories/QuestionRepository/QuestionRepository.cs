@@ -53,7 +53,7 @@ namespace QAPlatform.Repositories.QuestionRepository
 
         public List<Question> GetAll()
         {
-            return Context.Questions.ToList();
+            return Context.Questions.Include(obj => obj.User).ToList();
         }
 
         public Question Update(Question question)
